@@ -84,12 +84,12 @@ pub fn load_data_from_csv(
         let player: &str = &record[0];
         let position: &str = &record[1];
         let id: &str = &record[2];
-        let draft_year: i64 = record[3].parse();
-        let projected_spm: f64 = record[4].parse();
-        let superstar: f64 = record[5].parse();
-        let starter: f64 = record[6].parse();
-        let role_player: f64 = record[7].parse();
-        let bust: f64 = record[8].parse();
+        let draft_year: i64 = record[3].parse()?;
+        let projected_spm: f64 = record[4].parse()?;
+        let superstar: f64 = record[5].parse()?;
+        let starter: f64 = record[6].parse()?;
+        let role_player: f64 = record[7].parse()?;
+        let bust: f64 = record[8].parse()?;
 
         conn.execute(&insert_query, params![player, position, id, draft_year, projected_spm, superstar, starter, role_player, bust])?;
     }
