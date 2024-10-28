@@ -47,9 +47,7 @@ pub fn query_exec(conn: &Connection, query_string: &str) -> Result<()> {
 
     // Iterate over the rows and print the results
     for row in rows {
-        let (
-            player, position, id, draft_year, projected_spm, superstar, starter, role_player, bust
-        ) = row?;
+        let (player, position, id, draft_year, projected_spm, superstar, starter, role_player, bust) = row?;
         println!(
             "Player: {}, Position: {}, ID: {}, Draft Year: {}, Projected SPM: {}, Superstar {}, Starter: {}, Role Player {}, Bust: {}", 
             player, position, id, draft_year, projected_spm, superstar, starter, role_player, bust
@@ -83,9 +81,15 @@ pub fn load_data_from_csv(
     //this is a loop that expects a specific schema, you will need to change this if you have a different schema
     for result in rdr.records() {
         let record = result?;
-        let id: i32 = record[0].parse()?; //.parse() is a method that converts a string into a number
-        let name: &str = &record[1];
-        let age: i32 = record[2].parse()?;
+        let player: &str = &record[0];
+        let position: &str = &record[1];
+        let id: &str = &record[2];
+        let draft_year: i64 = record[3].parse();
+        let projected_spm: f64 = record[4].parse();
+        let superstar: f64 = record[5].parse();
+        let starter: f64 = record[6].parse();
+        let role_player: f64 = record[7].parse();
+        let bust: f64 = record[8].parse();
 
         conn.execute(&insert_query, params![player, position, id, draft_year, projected_spm, superstar, starter, role_player, bust])?;
     }
